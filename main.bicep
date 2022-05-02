@@ -62,6 +62,19 @@ var hostingPlanName = 'hostingplan${uniqueString(resourceGroup().id)}'
 var sqlserverName = 'toywebsite${uniqueString(resourceGroup().id)}'
 var storageAccountName = 'toywebsite${uniqueString(resourceGroup().id)}'
 
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(roleDefinitionId, resourceGroup().id)
+
+  properties: {
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
+    principalId: manageIdentity.properties.principalId
+  }
+}
+
+
+
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: storageAccountName
   location: 'eastus'
@@ -98,7 +111,9 @@ var databaseName = 'ToyCompanyWebsite'
 resource sqlserverName_databaseName 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
   name: '${sqlserver.name}/${databaseName}'
   location: location
-  sku: environmentConfigurationMap[environmentType].database.sku
+  sku: {
+    name:'Basic'
+  }
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
     maxSizeBytes: 1073741824
@@ -146,7 +161,7 @@ resource webSite 'Microsoft.Web/sites@2020-06-01' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '${msi.id}': {}
+      '${manageIdentity.id}': {}
     }
   }
 }
@@ -162,7 +177,7 @@ resource webSite 'Microsoft.Web/sites@2020-06-01' = {
 //  }
 //}
 
-resource msi 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+resource manageIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: managedIdentityName
   location: location
 }
@@ -173,7 +188,7 @@ resource roleassignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
   properties: {
     principalType: 'ServicePrincipal'
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
-    principalId: msi.properties.principalId
+    principalId: manageIdentity.properties.principalId
   }
 }
 
