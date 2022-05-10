@@ -1,16 +1,16 @@
 
-module Asia 'modules/vnet.bicep' = {
-  name: 'ja'
+module vnet 'modules/vnet.bicep' = {
+  name: 'vmUs'
   params: {
-    location: 'eastasia'
+    location: 'east-us'
   }
 }
 
 module vm 'modules/vm.bicep' = [for i in range(1,3):{ 
   name: 'ja${i}'
   params: {
-    location: 'eastasia'
-    subnetId: Asia.outputs.subnetId
+    location: 'east-us'
+    subnetId: vnet.outputs.subnetId
     adminPasswordOrKey: 'P@ssw0rd12'
     adminUsername: 'juanandres'
   }
