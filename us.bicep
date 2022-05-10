@@ -1,12 +1,12 @@
 
-module vnet 'modules/vnet.bicep' = {
+module vnet 'shared/vnet.bicep' = {
   name: 'vmUs'
   params: {
     location: 'east-us'
   }
 }
 
-module vm 'modules/vm.bicep' = [for i in range(1,3):{ 
+module vm 'shared/vm.bicep' = [for i in range(1,3):{ 
   name: 'ja${i}'
   params: {
     location: 'east-us'
