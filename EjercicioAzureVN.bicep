@@ -1,63 +1,3 @@
-resource  VnetAsia  'Microsoft.Network/VirtualNetworks@2019-09-01' = {
-  name: 'ow-vnet1'
-  location: location
-  tags: {
-      env: 'dev'
-  }
-  properties: {
-      addressSpace: {
-          addressPrefixes: [
-              '10.0.0.0/16'
-          ]
-      }
-      subnets: [
-          {
-              name: 'public-subnet'
-              properties: {
-                  addressPrefix: '10.0.1.0/24'
-              }
-          }  
-      ]  
-  } 
-}
-
-resource VirtualMarchineAsia 'Microsoft.Compute/virtualMachines@2020-06-01' = {
-  name: vmName
-  location: location
-  properties: {
-    hardwareProfile: {
-      vmSize: vmSize
-    }
-    storageProfile: {
-      osDisk: {
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: osDiskType
-        }
-      }
-      imageReference: {
-        publisher: 'Canonical'
-        offer: 'UbuntuServer'
-        sku: ubuntuOSVersion
-        version: 'latest'
-      }
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: nic1.id
-        }
-      ]
-    }
-    osProfile: {
-      computerName: vmName
-      adminUsername: adminUsername
-      adminPassword: adminPasswordOrKey
-      linuxConfiguration: ((authenticationType == 'password') ? null : linuxConfiguration)
-    }
-  }
-}
-
 
 @description('The name of you Virtual Machine.')
 param vmName string = 'simpleLinuxVM'
@@ -116,137 +56,7 @@ var linuxConfiguration = {
   }
 }
 
-resource nic1 'Microsoft.Network/networkInterfaces@2020-06-01' = {
-  name: networkInterfaceName
-  location: location
-  properties: {
-    ipConfigurations: [
-      {
-        name: 'ipconfig1'
-        properties: {
-          subnet: {
-            id: subnetId
-          }
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: publicIPAsia.id
-          }
-        }
-      }
-    ]
-    networkSecurityGroup: {
-      id: nsgAsia.id
-    }
-  }
-}
 
-resource nsgAsia 'Microsoft.Network/networkSecurityGroups@2020-06-01' = {
-  name: networkSecurityGroupName
-  location: location
-  properties: {
-    securityRules: [
-      {
-        name: 'SSH'
-        properties: {
-          priority: 1000
-          protocol: 'Tcp'
-          access: 'Allow'
-          direction: 'Inbound'
-          sourceAddressPrefix: '*'
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '22'
-        }
-      }
-    ]
-  }
-}
-
-
-
-resource publicIPAsia 'Microsoft.Network/publicIPAddresses@2020-06-01' = {
-  name: publicIPAddressName
-  location: location
-  sku: {
-    name: 'Basic'
-  }
-  properties: {
-    publicIPAllocationMethod: 'Dynamic'
-    publicIPAddressVersion: 'IPv4'
-    dnsSettings: {
-      domainNameLabel: dnsLabelPrefix
-    }
-    idleTimeoutInMinutes: 4
-  }
-}
-
-
-
-
-
-
-
-
-
-resource  VnetEurope  'Microsoft.Network/VirtualNetworks@2019-09-01' = {
-  name: 'ow-vnet2'
-  location: location
-  tags: {
-      env: 'dev'
-  }
-  properties: {
-      addressSpace: {
-          addressPrefixes: [
-              '10.0.0.1/16'
-          ]
-      }
-      subnets: [
-          {
-              name: 'public-subnet'
-              properties: {
-                  addressPrefix: '10.0.2.0/24'
-              }
-          }  
-      ]  
-  } 
-}
-
-resource VirtualEurope 'Microsoft.Compute/virtualMachines@2020-06-01' = {
-  name: vmName
-  location: location
-  properties: {
-    hardwareProfile: {
-      vmSize: vmSize2
-    }
-    storageProfile: {
-      osDisk: {
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: osDiskType2
-        }
-      }
-      imageReference: {
-        publisher: 'Canonical'
-        offer: 'UbuntuServer'
-        sku: ubuntuOSVersionMachine2
-        version: 'latest'
-      }
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: nic2.id
-        }
-      ]
-    }
-    osProfile: {
-      computerName: vmName
-      adminUsername: adminUsername
-      adminPassword: adminPasswordOrKey
-      linuxConfiguration: ((authenticationType2 == 'password') ? null : LinuxConfiguration2)
-    }
-  }
-}
 
 @description('The name of the Second Virtual Machine')
 param vmName2 string = 'simpleLinuxVM'
@@ -382,7 +192,7 @@ resource  VnetNorthAmerica  'Microsoft.Network/VirtualNetworks@2019-09-01' = {
           {
               name: 'public-subnet'
               properties: {
-                  addressPrefix: '10.0.1.0/24'
+                  addressPrefix: '10.0.1.0/24  '
               }
           }  
       ]  
@@ -464,7 +274,7 @@ param location3 string
 param vmSize3 string = 'Standard_B2s'
 
 
-
+  
 @description('Name of the Network Security Group')
 param networkSecurityGroupName3 string = 'SecGroupNet'
 

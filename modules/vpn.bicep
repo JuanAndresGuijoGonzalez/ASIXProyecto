@@ -9,4 +9,4 @@ param sharedKey string
 ])
 param gatewaySku string = 'vpngw1'
 
-param location
+param location string = 'vpngw1'
