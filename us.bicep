@@ -1,18 +1,22 @@
 
-module vnet 'shared/vnet.bicep' = {
+module vnetUS 'shared/vnet.bicep' = {
   name: 'vmUs'
   params: {
     location: 'east-us'
   }
 }
 
-module vm 'shared/vm.bicep' = [for i in range(1,3):{ 
+module vmUS 'shared/vm.bicep' = [for i in range(1,3):{ 
   name: 'ja${i}'
   params: {
+    vmName: 'vm-eastus-${i}'
     location: 'east-us'
-    subnetId: vnet.outputs.subnetId
+    subnetId: vnetUS.outputs.subnetId
     adminPasswordOrKey: 'P@ssw0rd12'
     adminUsername: 'juanandres'
+    scriptcontent: loadTextContent('us.bicep','utf-8')
+    
+
   }
   
 }]
