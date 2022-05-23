@@ -1,7 +1,12 @@
+var location = 'eastasia'
+
 
 module vnetFrance 'shared/vnet.bicep' = {
   name: 'vmFrance'
   params: {
+    location : location 
+    virtualnetworkJuanA: vmFrance
+  }
     location: 'francecentral'
     subnet2name: ''
     virtualNetworkName:''
@@ -9,6 +14,13 @@ module vnetFrance 'shared/vnet.bicep' = {
    }
   }
 
+
+
+
+
+
+
+  
 module vmFrance 'shared/vm.bicep' = [for i in range(1,3):{ 
   name: 'antoine${i}'
   params: {
