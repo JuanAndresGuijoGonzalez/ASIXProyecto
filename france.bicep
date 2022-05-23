@@ -5,7 +5,7 @@ module vnetFrance 'shared/vnet.bicep' = {
   name: 'vmFrance'
   params: {
     location : location 
-    virtualnetworkJuanA: vmFrance
+    virtualnetworkJuanA:
   }
     location: 'francecentral'
     subnet2name: ''
