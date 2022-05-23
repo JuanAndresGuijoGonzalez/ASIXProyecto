@@ -3,8 +3,11 @@ module vnetFrance 'shared/vnet.bicep' = {
   name: 'vmFrance'
   params: {
     location: 'francecentral'
+    subnet2name: ''
+    virtualNetworkName:''
+    subnet1Name: ''
+   }
   }
-}
 
 module vmFrance 'shared/vm.bicep' = [for i in range(1,3):{ 
   name: 'antoine${i}'
