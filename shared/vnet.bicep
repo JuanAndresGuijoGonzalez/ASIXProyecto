@@ -6,7 +6,7 @@
  resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
   name: '${virtualnetworkJuanA}-1'
   location: location
-  properties: {
+  properties: {    
     addressSpace: {
       addressPrefixes: [
         '10.1.0.0/16'
