@@ -18,6 +18,6 @@ module vm 'shared/vm.bicep' = {
      location: location
      adminUsername: 'user1'
      adminPasswordOrKey: 'P@ssw0rd'
-     vmName: 'francecentral'     
+     vmName: 'francecetral'     
    }
 }
