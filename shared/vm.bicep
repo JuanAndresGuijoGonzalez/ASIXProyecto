@@ -1,8 +1,6 @@
 @description('The name of you Virtual Machine.')
 param vmName string
 
-param scriptcontent string
-
 @description('Username for the Virtual Machine.')
 param adminUsername string
 
