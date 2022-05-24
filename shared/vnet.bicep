@@ -1,6 +1,5 @@
  param location string
  param virtualnetworkJuanA string
- 
 
 
  resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-08-01' = {
@@ -33,4 +32,16 @@
       }
     ]
   }
- }   
+  resource subnet1  'subnets' existing = {
+    name: virtualnetworkJuanA
+  }
+
+  resource subnet2 'subnets' existing = {
+  name: virtualnetworkJuanA
+  }
+}   
+
+
+ output subnet1ResourceID string = virtualNetwork::subnet1.id
+ output subnet2ResourceID string = virtualNetwork::subnet2.id
+

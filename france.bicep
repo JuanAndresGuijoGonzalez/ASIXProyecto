@@ -1,4 +1,4 @@
-var location = 'australiacentral'
+var location = 'francecentral'
 
 
 
@@ -10,13 +10,14 @@ module vnet 'shared/vnet.bicep' = {
   }
 }
 
+#disable-next-line ---------------------------------
+
 module vm 'shared/vm.bicep' = {
-  name: 'juanandres'
-  params: {
-    location: location 
-    adminUsername: 'juanandres'
-    adminPasswordOrKey: 'P@ssw0rd'
-    vmName: 'europejuanandres1'
-    subnetId:
-  }
+   name: 'subneteurope1'
+   params: {
+     location: location
+     adminUsername: 'user1'
+     adminPasswordOrKey: 'P@ssw0rd'
+     vmName: 'francecentral'     
+   }
 }

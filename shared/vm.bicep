@@ -4,7 +4,7 @@ param vmName string
 @description('Username for the Virtual Machine.')
 param adminUsername string
 
-param subnetId string
+
 
 @description('Type of authentication to use on the Virtual Machine. SSH key is recommended.')
 @allowed([
@@ -62,17 +62,8 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-06-01' = {
     ipConfigurations: [
       {
         name: 'ipconfig1'
-        properties: {
-          subnet: {
-            id: subnetId
-          }
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: publicIP.id
-          }
         }
-      }
-    ]
+      ]
     networkSecurityGroup: {
       id: nsg.id
     }
