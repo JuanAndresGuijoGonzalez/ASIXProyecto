@@ -61,6 +61,7 @@ var environmentConfigurationMap = {
 var hostingPlanName = 'hostingplan${uniqueString(resourceGroup().id)}'
 var sqlserverName = 'toywebsite${uniqueString(resourceGroup().id)}'
 var storageAccountName = 'toywebsite${uniqueString(resourceGroup().id)}'
+var locationstorage = 'northeurope'
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(roleDefinitionId, resourceGroup().id)
@@ -77,7 +78,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: storageAccountName
-  location: 'eastus'
+  location: locationstorage 
   sku: {
     name: 'Standard_LRS'
   }

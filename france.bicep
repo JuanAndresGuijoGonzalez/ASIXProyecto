@@ -1,4 +1,4 @@
-var location = 'francecentral'
+var location = 'australiacentral'
 
 
 
@@ -6,7 +6,10 @@ module vnet 'shared/vnet.bicep' = {
   name: 'europe-vm'
   params: {
     location: location
-    virtualnetworkJuanA: 'subred1'
+    redvirtual1: 'subred1'
+    redvirtual2: 'subred2'
+    redvirtual3: 'subred3'
+    subredeu: 'Australia'
   }
 }
 
@@ -18,6 +21,7 @@ module vm 'shared/vm.bicep' = {
      location: location
      adminUsername: 'user1'
      adminPasswordOrKey: 'P@ssw0rd'
-     vmName: 'francecetral'     
+     vmName: 'australiaeast'
+     subnetId: vnet.outputs.subnetID
    }
 }
