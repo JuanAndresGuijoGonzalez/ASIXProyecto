@@ -18,7 +18,7 @@ case $1 in
     login-default)
         az login --tenant jguijoasix2nlamerce.onmicrosoft.com
         az group create --location francecentral --name test  
-        az configure --defaults group='test'
+        az configure --defaults group='azureasix'
     ;;
 
     deploy)

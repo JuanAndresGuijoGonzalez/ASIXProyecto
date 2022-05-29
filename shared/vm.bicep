@@ -28,15 +28,14 @@ param ubuntuOSVersion string = '18.04-LTS'
 param location string = resourceGroup().location
 
 @description('The size of the VM')
-param vmSize string = 'Standard_B2s'
+param vmSizeeurope string = 'Standard_D11_v2'
 
 
 
-var publicIPAddressName = '${vmName}PublicIP'
+
+
 var networkInterfaceName = '${vmName}NetInt'
 var osDiskType = 'Standard_LRS'
-var subnetAddressPrefix = '10.1.0.0/24'
-var addressPrefix = '10.1.0.0/16'
 var linuxConfiguration = {
   disablePasswordAuthentication: true
   ssh: {
@@ -73,7 +72,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   location: location
   properties: {
     hardwareProfile: {
-      vmSize: vmSize
+      vmSize: vmSizeeurope  
     }
     storageProfile: {
       osDisk: {

@@ -1,27 +1,26 @@
 var location = 'australiacentral'
 
 
-
 module vnet 'shared/vnet.bicep' = {
-  name: 'europe-vm'
+  name: 'europe-vnet'
   params: {
     location: location
     redvirtual1: 'subred1'
     redvirtual2: 'subred2'
     redvirtual3: 'subred3'
-    subredeu: 'Australia'
+    subredeu: 'eu-vnet'
   }
 }
 
-#disable-next-line ---------------------------------
-
 module vm 'shared/vm.bicep' = {
-   name: 'subneteurope1'
-   params: {
-     location: location
-     adminUsername: 'user1'
-     adminPasswordOrKey: 'P@ssw0rd'
-     vmName: 'australiaeast'
-     subnetId: vnet.outputs.subnetID
-   }
+  name: 'VMEurope'
+  params: {
+    location: location
+    adminUsername: 'KarimBenzema'
+    adminPasswordOrKey: 'Paris1'
+    vmName: 'frmachine1'
+    subnetId: vnet.outputs.subnetID
+  }
 }
+
+

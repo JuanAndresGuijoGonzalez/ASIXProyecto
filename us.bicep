@@ -1,47 +1,30 @@
-var location = 'eastasia'
-var virtualmachinename = 'NAVirtualMachine'
-var computername = 'NorthAmerica1'
-param adminUsername string
-param adminPassword string
-param OSVersion string = '2019-datacenter-gensecond'
+var location = 'australiacentral'
 
 
 
 
-#disable-next-line------------------------------------------------------------------------
-  
-  resource virtualmachine 'Microsoft.Compute/virtualMachines@2021-03-01' = {
-    name: virtualmachinename
+module vnet 'shared/vnet.bicep' = {
+  name: 'usa-vnet'
+  params: {
     location: location
-    properties: {
-      hardwareProfile: {
-        vmSize: 'Standard_A1'
-      }
-      osProfile: {
-        computerName: computername
-        adminUsername: adminUsername
-        adminPassword: adminPassword
-      }
-      storageProfile: {
-        imageReference: {
-          publisher: 'MicrosoftWindowsServer'
-          offer: 'WindowsServer'
-          sku: OSVersion
-          version: 'latest'
-        }
-        osDisk: {
-          createOption: 'FromImage'
-          managedDisk: {
-            storageAccountType: 'StandardSSD_LRS'
-          }
-        }
-        dataDisks: [
-          {
-            diskSizeGB: 1023
-            lun: 0
-            createOption: 'Empty'
-          }
-        ]
-      }
-    }
+    redvirtual1: 'subred1'
+    redvirtual2: 'subred2'
+    redvirtual3: 'subred3'
+    subredeu: 'usa-vn'
   }
+}
+
+
+module vm 'shared/vm.bicep' = {
+  name: 'VMUsa'
+  params: {
+    location: location
+    adminUsername: 'TomCruise'
+    adminPasswordOrKey: 'NewYork1'
+    vmName: 'usamachine1'
+    subnetId: vnet.outputs.subnetID
+  }
+}
+
+
+

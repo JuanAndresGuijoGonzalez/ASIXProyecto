@@ -1,23 +1,27 @@
+var location = 'japaneast'
 
-module vnetAsia 'shared/vnet.bicep' = {
-  name: 'ja'
+
+
+module vnet 'shared/vnet.bicep' = {
+  name: 'asia-vn'
   params: {
-    location: 'eastasia'
+    location: location
+    redvirtual1: 'subred1'
+    redvirtual2: 'subred2'
+    redvirtual3: 'subred3'
+    subredeu: 'asia-vn'
   }
 }
 
+module vm 'shared/vm.bicep' = {
+  name: 'VMAsia'
+  params: {
+    location: location
+    adminUsername: 'WeiMingXue'
+    adminPasswordOrKey: 'Shanghai1'
+    vmName: 'asiamachine1'
+    subnetId: vnet.outputs.subnetID
 
-
-module vm 'shared/vm.bicep' = [for i in range(1,3):{ 
-  name: 'mery${i}'
-  params:{
-    vmName: 'veastasia-mery${i}'
-    location: 'eastasia'
-    subnetId: vnetAsia.outputs.subnetId
-    adminPasswordOrKey: 'P@ssw0rd12'
-    adminUsername: 'maria'
-    scriptcontent: loadTextContent('asia.sh','utf-8')
   }
-  
-  
-}]
+}
+
